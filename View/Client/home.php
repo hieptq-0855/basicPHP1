@@ -19,7 +19,7 @@
             <?php
             if (isset($_COOKIE['user_id'])) {
                 $db = new Database();
-                $result = $db->getInfo($_COOKIE['user_id']);git
+                $result = $db->getInfo($_COOKIE['user_id']);
                 if ($result != false) { ?>
                     <p>Họ và tên: <?php echo $result['full_name'] ?></p>
                     <p>Địa chỉ: <?php
