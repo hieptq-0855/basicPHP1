@@ -8,22 +8,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Trang chủ</title>
+
+    <link rel="stylesheet" href="../../Public/style.css">
 </head>
 <body>
     <br>
-    <h1 style="text-align: center;">Xin chào: <?php echo $_COOKIE['user_name'] ?></h1>
+    <h1 class="text-center">Xin chào: <?php echo $_SESSION['user_name'] ?></h1>
     <br>
-    <div style="display: flex; justify-content: center;">
-        <div style="border: 1px solid black; width: 40%; padding-left: 40px; padding-bottom: 20px; padding-right: 20px;">
-            <h3 style="text-align: center;">Thông tin cá nhân</h3>
+    <div class="flex-justify-center">
+        <div class="user-information-style">
+            <h3 class="text-center">Thông tin cá nhân</h3>
             <?php
-            if (isset($_COOKIE['user_id'])) {
+            if (isset($_SESSION['user_id'])) {
                 $db = new Database();
-                $result = $db->getInfo($_COOKIE['user_id']);
-                if ($result != false) { ?>
+                $result = $db->getInfo($_SESSION['user_id']);
+                if ($result) { ?>
                     <p>Họ và tên: <?php echo $result['full_name'] ?></p>
                     <p>Địa chỉ: <?php
-                        if ($result['address'] != null) {
+                        if ($result['address']) {
                             echo $result['address'];
                         } else {
                             echo "Chưa cập nhật";

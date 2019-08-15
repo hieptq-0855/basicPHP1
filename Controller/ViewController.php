@@ -3,10 +3,10 @@ namespace Controller;
 
 class ViewController {
     public function returnLogin(){
-        Header('Location: View/login.html');
+        Header('Location: View/login.php');
     }
     public function returnSignUp(){
-        Header('Location: View/signup.html');
+        Header('Location: View/signup.php');
     }
 
     public function returnClientHome(){

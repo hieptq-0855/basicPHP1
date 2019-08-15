@@ -30,11 +30,12 @@ class Controller{
         $db = new Database();
         $result = $db->checkLogin($user_name, $password);
         $db->close();
-        if ($result != false) {
-            setcookie('user_id', $result['id'], time() + 86400, "/");
-            setcookie('user_name', $result['user_name'], time() + 86400, "/");
-            setcookie('user_role', $result['role'], time() + 86400, "/");
-            if ($result['role'] == 2) {
+        if ($result) {
+            session_start();
+            $_SESSION['user_id'] = $result['id'];
+            $_SESSION['user_name'] = $result['user_name'];
+            $_SESSION['user_role'] = $result['role'];
+            if ($result['role'] === 2) {
                 Header('Location: index.php?controller=ViewController&function=returnAdminHome');
             } else {
                 Header('Location: index.php?controller=ViewController&function=returnClientHome');
@@ -45,4 +46,3 @@ class Controller{
 
     }
 }
-

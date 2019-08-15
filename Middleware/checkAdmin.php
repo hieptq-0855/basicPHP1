@@ -1,6 +1,7 @@
 <?php
-if (isset($_COOKIE['user_role'])) {
-    if ($_COOKIE['user_role'] != 2) {
-        Header('Location: ../../index.php');
+session_start();
+if (isset($_SESSION['user_role'])) {
+    if ((int) $_SESSION['user_role'] !== 2) {
+        header('Location: ../../index.php');
     }
 }
