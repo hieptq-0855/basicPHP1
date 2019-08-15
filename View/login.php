@@ -1,3 +1,6 @@
+<?php
+    require_once('../Middleware/loginMiddleware.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

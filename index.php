@@ -1,4 +1,5 @@
 <?php
+session_start();
 use Controller\ViewController;
 use Controller\Controller;
 
@@ -30,7 +31,7 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                     if (isset($_POST['signup'])) {
                         $controller->doSignUp( $_POST['full_name'], $_POST['birth'], $_POST['user_name'], $_POST['password'], $_POST['confirm_password']);
                     } else {
-                        header('Location: /404/');
+                        header('Location: index.php');
                     }
 
                     break;
@@ -38,7 +39,7 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                     if (isset($_POST['login'])) {
                         $controller->doLogin($_POST['user_name'], $_POST['password']);
                     } else {
-                        header('Location: /404/');
+                        header('Location: index.php');
                     }
                     break;
             }
@@ -46,5 +47,13 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
     }
 } else {
     $viewController = new ViewController();
-    $viewController->returnLogin();
+    if (isset($_SESSION['user_role'])) {
+        if ((int) $_SESSION['user_role'] === 2) {
+            $viewController->returnAdminHome();
+        } else {
+            $viewController->returnClientHome();
+        }
+    } else {
+        $viewController->returnLogin();
+    }
 }
