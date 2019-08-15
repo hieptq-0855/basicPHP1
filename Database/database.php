@@ -6,6 +6,8 @@ define('PASSWORD', '');
 define('DB_NAME', 'basic1');
 
 use Model\Account;
+use PDO;
+use PDOException;
 
 include_once('Model/Account.php');
 
@@ -14,22 +16,30 @@ class Database {
 
     public function __construct()
     {
-        $this->connection = new \mysqli(SERVER_NAME, USER_NAME, PASSWORD, DB_NAME);
-
-        if ($this->connection->connect_error) {
-            die('Connection failed');
+        try {
+            $this->connection = new PDO('mysql:host=localhost', USER_NAME, PASSWORD);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $e) {
+            die("Connection failed: " . $e->getMessage());
+        }
+        try {
+            $sql = 'USE ' . DB_NAME;
+            $this->connection->exec($sql);
+        } catch (PDOException $e) {
+            $this->createDB();
         }
     }
 
     public function close()
     {
-        $this->connection->close();
+        $this->connection = null;
     }
 
     public function checkUserName($user_name){
-        $sql = 'SELECT * FROM accounts where user_name = "' . $user_name . '"';
-        $result = mysqli_query($this->connection, $sql);
-        if ($result->num_rows > 0) {
+        $sql = 'SELECT * FROM accounts where user_name = ?';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$user_name]);
+        if ($stmt->rowCount() > 0) {
             return false;
         } else {
             return true;
@@ -39,17 +49,19 @@ class Database {
     public function storeUser($full_name, $birth, $user_name, $password){
         $hash_password = md5($password);
         try {
-            $this->connection->begin_transaction();
-            $sql = 'INSERT INTO accounts VALUES(null,"' . $user_name . '","' . $hash_password . '", DEFAULT)';
-            mysqli_query($this->connection, $sql);
-            $id = $this->connection->insert_id;
-            $sql = 'INSERT INTO users VALUES(null,"' . $full_name . '", null, "' . $birth . '",' . $id . ')';
-            mysqli_query($this->connection, $sql);
+            $this->connection->beginTransaction();
+            $sql = 'INSERT INTO accounts VALUES(null, ?, ?, DEFAULT)';
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$user_name, $hash_password]);
+            $id = $this->connection->lastInsertId();
+            $sql = 'INSERT INTO users VALUES(null, ?, null, ?, ?)';
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$full_name, $birth, $id]);
             $this->connection->commit();
 
             return true;
         } catch (\Exception $e) {
-            $this->connection->rollback();
+            $this->connection->rollBack();
 
             return false;
         }
@@ -57,10 +69,11 @@ class Database {
 
     public function checkLogin($user_name, $password){
         $hash_password = md5($password);
-        $sql = 'SELECT * FROM accounts WHERE user_name="' . $user_name . '"';
-        $result = $this->connection->query($sql);
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        $sql = 'SELECT * FROM accounts WHERE user_name=?';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$user_name]);
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch();
             if (hash_equals($hash_password, $row['password'])) {
                 return $row;
             } else {
@@ -69,17 +82,47 @@ class Database {
         } else {
             return false;
         }
-
     }
 
     public function getInfo($account_id){
-        $sql = 'SELECT * FROM users WHERE account_id="' . $account_id . '"';
-        $result = $this->connection->query($sql);
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        $sql = 'SELECT * FROM users WHERE account_id=?';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$account_id]);
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch();
+
             return $row;
         } else {
             return false;
+        }
+    }
+    public function createDB() {
+        try {
+            $sql = 'CREATE DATABASE ' . DB_NAME;
+            $this->connection->exec($sql);
+            $sql = 'USE ' . DB_NAME;
+            $this->connection->exec($sql);
+            $this->connection->beginTransaction();
+            $sql = "CREATE TABLE accounts (
+                    id int(11) AUTO_INCREMENT PRIMARY KEY,
+                    user_name varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+                    password varchar(400) COLLATE utf8_unicode_ci NOT NULL,
+                    role int(11) NOT NULL DEFAULT 1
+                )";
+            $this->connection->exec($sql);
+            $sql = "CREATE TABLE users (
+                    id int(11) AUTO_INCREMENT PRIMARY KEY,
+                    full_name varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+                    address varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+                    birth date NOT NULL,
+                    account_id int(11) NOT NULL
+                )";
+            $this->connection->exec($sql);
+            $this->connection->commit();
+        } catch (PDOException $e) {
+            $this->connection->rollBack();
+            $this->connection->exec("DROP DATABASE " . DB_NAME);
+            die($e);
         }
     }
 }

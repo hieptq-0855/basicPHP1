@@ -29,6 +29,7 @@ class Controller{
     public function doLogin($user_name, $password){
         $db = new Database();
         $result = $db->checkLogin($user_name, $password);
+        $db->close();
         if ($result != false) {
             setcookie('user_id', $result['id'], time() + 86400, "/");
             setcookie('user_name', $result['user_name'], time() + 86400, "/");
