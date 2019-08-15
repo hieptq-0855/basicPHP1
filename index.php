@@ -35,12 +35,15 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                     }
 
                     break;
-                case 'doLogin' :
+                case 'doLogin':
                     if (isset($_POST['login'])) {
                         $controller->doLogin($_POST['user_name'], $_POST['password']);
                     } else {
                         header('Location: index.php');
                     }
+                    break;
+                case 'doLogout':
+                        $controller->doLogout();
                     break;
             }
             break;

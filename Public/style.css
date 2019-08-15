@@ -7,8 +7,29 @@
 }
 .user-information-style {
     border: 1px solid black;
-    width: 40%;
+    width: 60%;
     padding-left: 40px;
     padding-bottom: 20px;
     padding-right: 20px;
+}
+.width-50 {
+    width: 50%;
+}
+.admin-menu {
+    background-color: green;
+    width: fit-content;
+    padding-left: 0px;
+}
+.admin-menu li  {
+    display: inline-block;
+    padding: 7px;
+    margin: unset;
+    padding: 16px;
+}
+.admin-menu li:hover  {
+    background-color: cadetblue;
+}
+.admin-menu li a {
+    text-decoration: none;
+    color: white;
 }

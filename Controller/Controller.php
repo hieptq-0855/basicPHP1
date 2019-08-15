@@ -45,4 +45,9 @@ class Controller{
         }
 
     }
+
+    public function doLogout(){
+        session_unset();
+        Header('Location: index.php');
+    }
 }
