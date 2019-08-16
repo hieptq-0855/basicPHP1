@@ -96,6 +96,19 @@ class Database {
             return false;
         }
     }
+    public function getUserInformationList(){
+        try {
+            $sql = 'SELECT users.*, accounts.user_name FROM users INNER JOIN accounts ON users.account_id = accounts.id';
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+
+            return $result;
+        } catch (PDOException $e) {
+            die($e);
+        }
+
+    }
     public function createDB() {
         try {
             $sql = 'CREATE DATABASE ' . DB_NAME;
