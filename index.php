@@ -22,6 +22,9 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                 case 'returnClientHome':
                     $viewController->returnClientHome();
                     break;
+                case 'returnUserManagement':
+                    $viewController->returnUserManagement();
+                    break;
             }
             break;
         case 'Controller':

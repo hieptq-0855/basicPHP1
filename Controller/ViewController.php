@@ -16,4 +16,8 @@ class ViewController {
     public function returnAdminHome(){
         Header('Location: View/Admin/home.php');
     }
+
+    public function returnUserManagement(){
+        Header('Location: View/Admin/user-management.php');
+    }
 }
