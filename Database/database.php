@@ -8,7 +8,9 @@ define('DB_NAME', 'basic1');
 use Model\Account;
 use PDO;
 use PDOException;
+use Model\User;
 
+include_once ('Model/User.php');
 include_once('Model/Account.php');
 
 class Database {
@@ -123,6 +125,18 @@ class Database {
             }
         } catch (PDOException $e) {
             die($e);
+        }
+    }
+
+    public function doUpdateUser($id, $full_name, $address, $birth){
+        try {
+            $sql = 'UPDATE users SET full_name=?, address=?, birth=? WHERE id=?';
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$full_name, $address, $birth, $id]);
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
         }
     }
 

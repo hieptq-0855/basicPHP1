@@ -55,6 +55,13 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                 case 'doLogout':
                         $controller->doLogout();
                     break;
+                case 'doUpdateUser':
+                    if (isset($_POST['submit'])) {
+                        $controller->doUpdateUser($_POST['id'], $_POST['full_name'], $_POST['address'], $_POST['birth']);
+                    } else {
+                        header('Location: index.php');
+                    }
+                    break;
             }
             break;
     }

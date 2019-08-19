@@ -1,9 +1,12 @@
 <?php
 namespace Controller;
+
 use Database\Database;
 use http\Header;
+use Model\User;
 
 include_once('Database/database.php');
+include_once ('Model/User.php');
 
 class Controller{
     public function doSignUp($full_name, $birth, $user_name, $password, $confirm_password){
@@ -49,5 +52,16 @@ class Controller{
     public function doLogout(){
         session_unset();
         Header('Location: index.php');
+    }
+
+    public function doUpdateUser($id, $full_name, $address, $birth){
+        $db = new Database();
+        $result = $db->doUpdateUser($id, $full_name, $address, $birth);
+        $db->close();
+        if ($result) {
+            echo '<script>alert("Cập nhật thành công");window.location.href="./index.php";</script>';
+        } else {
+            echo '<script>alert("Cập nhật lỗi!");window.location.href="./index.php";</script>';
+        }
     }
 }
