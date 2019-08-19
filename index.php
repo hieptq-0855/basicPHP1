@@ -25,6 +25,13 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                 case 'returnUserManagement':
                     $viewController->returnUserManagement();
                     break;
+                case 'returnUpdateUser':
+                    if (isset($_GET['id'])) {
+                        $viewController->returnUpdateUser($_GET['id']);
+                    } else {
+                        header('Location: index.php');
+                    }
+                    break;
             }
             break;
         case 'Controller':

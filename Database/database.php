@@ -107,8 +107,25 @@ class Database {
         } catch (PDOException $e) {
             die($e);
         }
-
     }
+
+    public function findUser($id){
+        try {
+            $sql = 'SELECT * FROM users WHERE id=?';
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$id]);
+            if ($stmt->rowCount() > 0) {
+                $result = $stmt->fetch();
+
+                return $result;
+            } else {
+                return null;
+            }
+        } catch (PDOException $e) {
+            die($e);
+        }
+    }
+
     public function createDB() {
         try {
             $sql = 'CREATE DATABASE ' . DB_NAME;
