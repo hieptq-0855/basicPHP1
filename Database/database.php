@@ -165,7 +165,7 @@ class Database {
     }
 
     public function findInfoUser($account_id){
-        $sql = 'SELECT * FROM users WHERE account_id=?';
+        $sql = 'SELECT * FROM users WHERE account_id = ?';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$account_id]);
         if ($stmt->rowCount() > 0) {
@@ -175,6 +175,19 @@ class Database {
         }
 
         return false;
+    }
+
+    public function changePassword($id, $new_password){
+        try {
+            $new_password = md5($new_password);
+            $sql = 'UPDATE accounts SET password = ? WHERE id = ?';
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$new_password, $id]);
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function createDB() {
