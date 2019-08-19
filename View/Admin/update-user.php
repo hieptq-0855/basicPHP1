@@ -34,9 +34,9 @@ if (!isset($_GET['id'])) {
                         <form action="../../index.php?controller=Controller&function=doUpdateUser" method="POST">
                             <input type="hidden" name="id" value="<?php echo $user['id'] ?>">
                             <lable>Họ và tên</lable>
-                            <input type="text" value="<?php echo $user['full_name']; ?>" name="full_name" required>
+                            <input type="text" value="<?php echo $user['full_name']; ?>" name="full_name" maxlength="50" required>
                             <lable>Địa chỉ</lable>
-                            <input type="text" value="<?php echo $user['address']; ?>" name="address" required>
+                            <input type="text" value="<?php echo $user['address']; ?>" name="address" maxlength="100" required>
                             <lable>Ngày sinh</lable>
                             <input type="date" value="<?php echo $user['birth']; ?>" name="birth" required>
                             <input type="submit" name="submit" value="Cập nhật">
