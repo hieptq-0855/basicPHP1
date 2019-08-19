@@ -50,7 +50,7 @@
                             <td><?php echo $user['birth']; ?></td>
                             <td><?php echo $user['user_name']; ?></td>
                             <td>
-                                <a href="?controller=Controller&function=updateUser&id=<?php echo $user['id'] ?>">
+                                <a href="../../index.php?controller=ViewController&function=returnUpdateUser&id=<?php echo $user['id'] ?>">
                                     <button class="option-button">Sửa</button>
                                 </a>
                                 <button class="option-button" id="deleteButton" value="<?php echo $user['id'] ?>">Xóa</button>

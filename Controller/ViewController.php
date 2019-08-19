@@ -20,4 +20,8 @@ class ViewController {
     public function returnUserManagement(){
         Header('Location: View/Admin/user-management.php');
     }
+
+    public function returnUpdateUser($id){
+        Header('Location: View/Admin/update-user.php?id=' . $id);
+    }
 }
