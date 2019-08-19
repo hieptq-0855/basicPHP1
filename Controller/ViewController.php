@@ -28,4 +28,8 @@ class ViewController {
     public function returnAdminUpdateProfile(){
         Header('Location: View/Admin/update-profile.php');
     }
+
+    public function returnAdminChangePassword(){
+        Header('Location: View/Admin/change-password.php');
+    }
 }

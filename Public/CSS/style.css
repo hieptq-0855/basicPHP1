@@ -67,7 +67,7 @@ div .update-form-container {
     background-color: #f2f2f2;
     padding: 20px;
 }
-.update-form-container input[type=text], input[type=date] {
+.update-form-container input[type=text], input[type=date], input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
