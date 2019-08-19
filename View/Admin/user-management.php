@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <title>Quản lý người dùng</title>
 
-    <link rel="stylesheet" href="../../Public/style.css">
+    <link rel="stylesheet" href="../../Public/CSS/style.css">
 </head>
 <body>
 <div class="flex-justify-center">
@@ -53,7 +53,10 @@
                                 <a href="../../index.php?controller=ViewController&function=returnUpdateUser&id=<?php echo $user['id'] ?>">
                                     <button class="option-button">Sửa</button>
                                 </a>
-                                <button class="option-button" id="deleteButton" value="<?php echo $user['id'] ?>">Xóa</button>
+                                <form action="../../index.php?controller=Controller&function=doDeleteUser" id="<?php echo $user['id'] ?>" method="post" class="display-inline">
+                                    <input type="hidden" name="id" value="<?php echo $user['id'] ?>">
+                                    <input type="button" onclick="deleteButton(<?php echo $user['id'] ?>)" value="Xóa">
+                                </form>
                             </td>
                         </tr>
                 <?php
@@ -64,5 +67,6 @@
         </div>
     </div>
 </div>
+<script src="../../Public/JS/app.js"></script>
 </body>
 </html>

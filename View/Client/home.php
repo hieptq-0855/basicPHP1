@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <title>Trang chủ</title>
 
-    <link rel="stylesheet" href="../../Public/style.css">
+    <link rel="stylesheet" href="../../Public/CSS/style.css">
 </head>
 <body class="flex-justify-center">
     <div class="width-50">

@@ -94,3 +94,6 @@ div .update-form-container {
 .update-form-container input[type=submit]:hover {
     background-color: #45a049;
 }
+.display-inline {
+    display: inline;
+}

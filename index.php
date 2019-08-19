@@ -62,6 +62,13 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                         header('Location: index.php');
                     }
                     break;
+                case 'doDeleteUser':
+                        if (isset($_POST['id'])) {
+                            $controller->doDeleteUser($_POST['id']);
+                        } else {
+                            header('Location: index.php');
+                        }
+                    break;
             }
             break;
     }
