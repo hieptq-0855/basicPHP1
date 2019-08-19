@@ -24,4 +24,8 @@ class ViewController {
     public function returnUpdateUser($id){
         Header('Location: View/Admin/update-user.php?id=' . $id);
     }
+
+    public function returnAdminUpdateProfile(){
+        Header('Location: View/Admin/update-profile.php');
+    }
 }

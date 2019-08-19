@@ -164,6 +164,19 @@ class Database {
             return false;
     }
 
+    public function findInfoUser($account_id){
+        $sql = 'SELECT * FROM users WHERE account_id=?';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$account_id]);
+        if ($stmt->rowCount() > 0) {
+            $user = $stmt->fetch();
+
+            return $user;
+        }
+
+        return false;
+    }
+
     public function createDB() {
         try {
             $sql = 'CREATE DATABASE ' . DB_NAME;
