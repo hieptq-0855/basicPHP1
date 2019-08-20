@@ -32,6 +32,9 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                         header('Location: index.php');
                     }
                     break;
+                case 'returnAdminUpdateProfile':
+                    $viewController->returnAdminUpdateProfile();
+                    break;
             }
             break;
         case 'Controller':

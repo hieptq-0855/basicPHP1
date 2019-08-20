@@ -2,16 +2,12 @@
     require('../../Middleware/checkAdmin.php');
     use Database\Database;
     require('../../Database/database.php');
-
-    if (!isset($_GET['id'])) {
-        header('Location: ../../index.php');
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cập nhật người dùng</title>
+    <title>Thông tin cá nhân</title>
 
     <link rel="stylesheet" href="../../Public/CSS/style.css">
 </head>
@@ -22,13 +18,13 @@
                 require_once('../Layout/menu.php');
             ?>
             <br>
-            <h1 class="text-center">Cập nhật người dùng</h1>
+            <h1 class="text-center">Cập nhật thông tin cá nhân</h1>
             <br>
             <div class="flex-justify-center">
                 <div class="update-form-container">
                     <?php
                         $db = new Database();
-                        $user = $db->findUser($_GET['id']);
+                        $user = $db->findInfoUser($_SESSION['user_id']);
                         if ($user) {
                     ?>
                             <form action="../../index.php?controller=Controller&function=doUpdateUser" method="POST">
