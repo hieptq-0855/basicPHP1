@@ -64,4 +64,14 @@ class Controller{
             echo '<script>alert("Cập nhật lỗi!");window.location.href="./index.php";</script>';
         }
     }
+
+    public function doDeleteUser($id){
+        $db = new Database();
+        $result = $db->deleteUser($id);
+        if ($result) {
+            echo '<script>alert("Xóa thành công");window.location.href="./index.php?controller=ViewController&function=returnUserManagement";</script>';
+        } else {
+            echo '<script>alert("Có lỗi xảy ra !");window.location.href="./index.php?controller=ViewController&function=returnUserManagement";</script>';
+        }
+    }
 }

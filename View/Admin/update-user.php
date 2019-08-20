@@ -13,7 +13,7 @@ if (!isset($_GET['id'])) {
     <meta charset="UTF-8">
     <title>Cập nhật người dùng</title>
 
-    <link rel="stylesheet" href="../../Public/style.css">
+    <link rel="stylesheet" href="../../Public/CSS/style.css">
 </head>
 <body>
 <div class="flex-justify-center">
@@ -36,7 +36,7 @@ if (!isset($_GET['id'])) {
                             <lable>Họ và tên</lable>
                             <input type="text" value="<?php echo $user['full_name']; ?>" name="full_name" maxlength="50" required>
                             <lable>Địa chỉ</lable>
-                            <input type="text" value="<?php echo $user['address']; ?>" name="address" maxlength="100" required>
+                            <input type="text" value="<?php echo $user['address']; ?>" name="address" maxlength="100">
                             <lable>Ngày sinh</lable>
                             <input type="date" value="<?php echo $user['birth']; ?>" name="birth" required>
                             <input type="submit" name="submit" value="Cập nhật">

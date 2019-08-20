@@ -71,7 +71,7 @@ class Database {
 
     public function checkLogin($user_name, $password){
         $hash_password = md5($password);
-        $sql = 'SELECT * FROM accounts WHERE user_name=?';
+        $sql = 'SELECT * FROM accounts WHERE user_name = ?';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$user_name]);
         if ($stmt->rowCount() > 0) {
@@ -87,7 +87,7 @@ class Database {
     }
 
     public function getInfo($account_id){
-        $sql = 'SELECT * FROM users WHERE account_id=?';
+        $sql = 'SELECT * FROM users WHERE account_id = ?';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$account_id]);
         if ($stmt->rowCount() > 0) {
@@ -100,7 +100,7 @@ class Database {
     }
     public function getUserInformationList(){
         try {
-            $sql = 'SELECT users.*, accounts.user_name FROM users INNER JOIN accounts ON users.account_id = accounts.id';
+            $sql = 'SELECT users.*, accounts.user_name FROM users INNER JOIN accounts ON users.account_id = accounts.id WHERE accounts.role = 1';
             $stmt = $this->connection->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll();
@@ -113,7 +113,7 @@ class Database {
 
     public function findUser($id){
         try {
-            $sql = 'SELECT * FROM users WHERE id=?';
+            $sql = 'SELECT * FROM users WHERE id = ?';
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$id]);
             if ($stmt->rowCount() > 0) {
@@ -130,7 +130,7 @@ class Database {
 
     public function doUpdateUser($id, $full_name, $address, $birth){
         try {
-            $sql = 'UPDATE users SET full_name=?, address=?, birth=? WHERE id=?';
+            $sql = 'UPDATE users SET full_name = ?, address = ?, birth = ? WHERE id = ?';
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$full_name, $address, $birth, $id]);
 
@@ -138,6 +138,30 @@ class Database {
         } catch (PDOException $e) {
             return false;
         }
+    }
+
+    public function deleteUser($id){
+            $user = $this->findUser($id);
+            if ($user) {
+                try {
+                    $this->connection->beginTransaction();
+                    $sql = 'DELETE FROM accounts WHERE id = ?';
+                    $stmt = $this->connection->prepare($sql);
+                    $stmt->execute([$user['account_id']]);
+                    $sql = 'DELETE FROM users WHERE id = ?';
+                    $stmt = $this->connection->prepare($sql);
+                    $stmt->execute([$id]);
+                    $this->connection->commit();
+
+                    return true;
+                } catch (PDOException $e) {
+                    $this->connection->rollBack();
+
+                    return false;
+                }
+            }
+
+            return false;
     }
 
     public function createDB() {
