@@ -20,6 +20,8 @@
         ?>
         <br>
         <div class="flex-justify-center">
+            <a href="../../index.php?controller=ViewController&function=returnUserUpdateProfile"><button>Cập nhật</button></a>
+            &nbsp;
             <a href="../../index.php?controller=Controller&function=doLogout"><button>Đăng xuất</button></a>
         </div>
     </div>
