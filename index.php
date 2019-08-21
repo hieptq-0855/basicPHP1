@@ -69,11 +69,18 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                     }
                     break;
                 case 'doDeleteUser':
-                        if (isset($_POST['id'])) {
-                            $controller->doDeleteUser($_POST['id']);
-                        } else {
-                            header('Location: index.php');
-                        }
+                    if (isset($_POST['id'])) {
+                        $controller->doDeleteUser($_POST['id']);
+                    } else {
+                        header('Location: index.php');
+                    }
+                    break;
+                case 'doAdminChangePassword':
+                    if (isset($_POST['submit'])) {
+                        $controller->doChangePassword($_POST['current_password'], $_POST['new_password'], $_POST['confirm_password']);
+                    } else {
+                        header('Location: index.php');
+                    }
                     break;
             }
             break;

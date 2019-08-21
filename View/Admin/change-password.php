@@ -23,13 +23,13 @@ require('../../Database/database.php');
             <br>
             <div class="flex-justify-center">
                 <div class="update-form-container">
-                    <form action="../../index.php?controller=Controller&function=doChangePassword" method="POST">
+                    <form action="../../index.php?controller=Controller&function=doAdminChangePassword" method="POST">
                         <lable>Mật khẩu hiện tại</lable>
                         <input type="password"  name="current_password" maxlength="50" placeholder="Nhập mật khẩu hiện tại" required>
                         <lable>Mật khẩu mới</lable>
                         <input type="password" name="new_password" maxlength="50" placeholder="Nhập mật khẩu mới" required>
                         <lable>Nhập lại mật khẩu</lable>
-                        <input type="password" name="confirm_password" placeholder="Nhập lại mật khẩu" required>
+                        <input type="password" name="confirm_password" maxlength="50" placeholder="Nhập lại mật khẩu" required>
                         <input type="submit" name="submit" value="Lưu">
                     </form>
                 </div>
