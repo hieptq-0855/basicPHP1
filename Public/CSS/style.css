@@ -110,3 +110,10 @@ div .update-form-container {
     flex-direction: column;
     padding: 20px 20px 20px 20px;
 }
+.error-alert {
+    width: 40%;
+    background-color: red;
+    color: white;
+    text-align: center;
+    padding-top: 12px;
+}

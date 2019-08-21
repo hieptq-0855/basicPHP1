@@ -15,6 +15,25 @@ require_once('../Middleware/loginMiddleware.php');
     <h2>Đăng ký</h2>
 </div>
 <br>
+<?php
+    if (isset($_SESSION['errors'])) {
+?>
+        <div class="row d-flex justify-content-center">
+            <div class="error-alert">
+                <?php
+                    foreach($_SESSION['errors'] as $error) {
+                ?>
+                        <p><?php echo $error; ?></p>
+                <?php
+                    }
+                ?>
+            </div>
+        </div>
+        <br>
+<?php
+    }
+    unset($_SESSION['errors']);
+?>
 <div class="row d-flex justify-content-center">
     <div class="col-md-5">
         <form method="POST" action="../index.php?controller=Controller&function=doSignUp">

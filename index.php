@@ -2,9 +2,11 @@
 session_start();
 use Controller\ViewController;
 use Controller\Controller;
+use Validation\Validation;
 
 include_once('Controller/ViewController.php');
 include_once('Controller/Controller.php');
+include_once ('Validation/validation.php');
 
 if (isset($_GET['controller']) && isset($_GET['function'])) {
     $controller = $_GET['controller'];
@@ -47,8 +49,15 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
             $controller = new Controller();
             switch ($function) {
                 case 'doSignUp':
-                    if (isset($_POST['signup'])) {
-                        $controller->doSignUp( $_POST['full_name'], $_POST['birth'], $_POST['user_name'], $_POST['password'], $_POST['confirm_password']);
+                    if ($_REQUEST) {
+                        $rq = $_REQUEST;
+                        $errors = Validation::SingUpFormValidation($rq);
+                        if (count($errors) > 0 ){
+                            $_SESSION['errors'] = $errors;
+                            Header('Location: index.php?controller=ViewController&function=returnSignUp');
+                        } else {
+                            $controller->doSignUp($rq);
+                        }
                     } else {
                         header('Location: index.php');
                     }
