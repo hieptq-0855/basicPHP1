@@ -97,3 +97,16 @@ div .update-form-container {
 .display-inline {
     display: inline;
 }
+.user-update-form input[text], input[type=date], input[type=password]{
+    width: 100%;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.user-update-style {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 20px 20px;
+}

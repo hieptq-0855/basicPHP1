@@ -38,6 +38,9 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                 case 'returnAdminChangePassword':
                     $viewController->returnAdminChangePassword();
                     break;
+                case 'returnUserUpdateProfile':
+                    $viewController->returnUserUpdateProfile();
+                    break;
             }
             break;
         case 'Controller':
