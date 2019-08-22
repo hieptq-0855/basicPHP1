@@ -21,6 +21,25 @@ require('../../Database/database.php');
             <br>
             <h1 class="text-center">Đổi mật khẩu</h1>
             <br>
+            <?php
+                if (isset($_SESSION['errors'])) {
+            ?>
+                    <div class="flex-justify-center">
+                        <div class="error-alert width-60">
+                        <?php
+                            foreach($_SESSION['errors'] as $error) {
+                        ?>
+                                <p><?php echo $error; ?></p>
+                        <?php
+                            }
+                        ?>
+                        </div>
+                    </div>
+                    <br>
+            <?php
+                }
+                unset($_SESSION['errors']);
+            ?>
             <div class="flex-justify-center">
                 <div class="update-form-container">
                     <form action="../../index.php?controller=Controller&function=doAdminChangePassword" method="POST">

@@ -79,28 +79,36 @@ class Controller{
         }
     }
 
-    public function doChangePassword($current_password, $new_password, $confirm_password){
-        if ($new_password === $confirm_password) {
-            $db = new Database();
-            if (isset($_SESSION['user_name'])) {
-                $user = $db->checkLogin($_SESSION['user_name'], $current_password);
-                if ($user) {
-                    $result = $db->changePassword($user['id'], $new_password);
-                    if ($result) {
-                        echo '<script>alert("Đổi mật khẩu thành công!");window.location.href="./index.php";</script>';
-                    }
+    public function doChangePassword($rq)
+    {
+        $errors = array();
+        $db = new Database();
+        if (isset($_SESSION['user_name'])) {
+            $user = $db->checkLogin($_SESSION['user_name'], $rq['current_password']);
+            if ($user) {
+                $result = $db->changePassword($user['id'], $rq['new_password']);
+                if ($result) {
+                    echo '<script>alert("Đổi mật khẩu thành công!");window.location.href="./index.php";</script>';
+                } else {
+                    array_push($errors, "Lỗi!");
+                    $db->close();
+                    $_SESSION['errors'] = $errors;
 
-                    echo '<script>alert("Lỗi!");window.location.href="./index.php";</script>';
+                    Header('Location: index.php?controller=ViewController&function=returnAdminChangePassword');
                 }
+            } else {
+                array_push($errors, "Mật khẩu hiện tại sai!");
                 $db->close();
+                $_SESSION['errors'] = $errors;
 
-                echo '<script>alert("Bạn nhập sai mật khẩu!");window.location.href="./index.php?controller=ViewController&function=returnAdminChangePassword";</script>';
+                Header('Location: index.php?controller=ViewController&function=returnAdminChangePassword');
             }
+        } else {
+            array_push($errors, "Lỗi!");
             $db->close();
+            $_SESSION['errors'] = $errors;
 
-            echo '<script>alert("Lỗi!");window.location.href="./index.php";</script>';
+            Header('Location: index.php?controller=ViewController&function=returnAdminChangePassword');
         }
-
-        echo '<script>alert("Nhập lại mật khẩu không khớp!");window.location.href="./index.php?controller=ViewController&function=returnAdminChangePassword";</script>';
     }
 }
