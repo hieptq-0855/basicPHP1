@@ -33,11 +33,13 @@
                     ?>
                             <form action="../../index.php?controller=Controller&function=doUpdateUser" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $user['id'] ?>">
-                                <lable>Họ và tên</lable>
-                                <input type="text" value="<?php echo $user['full_name']; ?>" name="full_name" maxlength="50" required>
-                                <lable>Địa chỉ</lable>
-                                <input type="text" value="<?php echo $user['address']; ?>" name="address" maxlength="100">
-                                <lable>Ngày sinh</lable>
+                                <label>Họ và tên</label>
+                                <input type="text" value="<?php echo $user['full_name']; ?>" name="full_name"
+                                       maxlength="50" required>
+                                <label>Địa chỉ</label>
+                                <input type="text" value="<?php echo $user['address']; ?>" name="address"
+                                       maxlength="100">
+                                <label>Ngày sinh</label>
                                 <input type="date" value="<?php echo $user['birth']; ?>" name="birth" required>
                                 <input type="submit" name="submit" value="Cập nhật">
                             </form>

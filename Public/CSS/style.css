@@ -18,7 +18,7 @@
 .admin-menu {
     background-color: green;
     width: fit-content;
-    padding-left: 0px;
+    padding-left: 0;
 }
 .admin-menu li  {
     display: inline-block;
@@ -55,13 +55,6 @@
 .option-button:hover {
     background-color: cadetblue;
 }
-.margin-top-20 {
-    margin-top: 20px;
-}
-.container {
-    display: flex;
-    flex-direction: column-reverse;
-}
 div .update-form-container {
     border-radius: 5px;
     background-color: #f2f2f2;
@@ -75,7 +68,6 @@ div .update-form-container {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    font-family: "Times New Roman";
 }
 .update-form-container input[type=submit] {
     width: 100%;

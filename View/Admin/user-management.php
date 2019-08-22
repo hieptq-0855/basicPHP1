@@ -1,7 +1,9 @@
 <?php
-    require('../../Middleware/checkAdmin.php');
-    use Database\Database;
-    require('../../Database/database.php');
+require('../../Middleware/checkAdmin.php');
+
+use Database\Database;
+
+require('../../Database/database.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,9 +55,11 @@
                                     <a href="../../index.php?controller=ViewController&function=returnUpdateUser&id=<?php echo $user['id'] ?>">
                                         <button class="option-button">Sửa</button>
                                     </a>
-                                    <form action="../../index.php?controller=Controller&function=doDeleteUser" id="<?php echo $user['id'] ?>" method="post" class="display-inline">
+                                    <form action="../../index.php?controller=Controller&function=doDeleteUser"
+                                          id="<?php echo $user['id'] ?>" method="post" class="display-inline">
                                         <input type="hidden" name="id" value="<?php echo $user['id'] ?>">
-                                        <input type="button" onclick="deleteButton(<?php echo $user['id'] ?>)" value="Xóa">
+                                        <input type="button" onclick="deleteButton(<?php echo $user['id'] ?>)"
+                                               value="Xóa">
                                     </form>
                                 </td>
                             </tr>

@@ -21,17 +21,19 @@ require('../../Database/database.php');
             $user = $db->findInfoUser($_SESSION['user_id']);
             if ($user) {
         ?>
-                <form action="../../index.php?controller=Controller&function=doUpdateUser" method="post" class="user-update-form">
+                <form action="../../index.php?controller=Controller&function=doUpdateUser" method="post"
+                      class="user-update-form">
                     <div class="flex-justify-center">
                         <div class="user-information-style user-update-style">
                             <input type="hidden" name="id" value="<?php echo $user['id'] ?>">
-                            <lable>Họ và tên</lable>
-                            <input type="text" value="<?php echo $user['full_name']; ?>" name="full_name" maxlength="50" required>
+                            <label>Họ và tên</label>
+                            <input type="text" value="<?php echo $user['full_name']; ?>" name="full_name"
+                                maxlength="50" required>
                             <br>
-                            <lable>Địa chỉ</lable>
+                            <label>Địa chỉ</label>
                             <input type="text" value="<?php echo $user['address']; ?>" name="address" maxlength="100">
                             <br>
-                            <lable>Ngày sinh</lable>
+                            <label>Ngày sinh</label>
                             <input type="date" value="<?php echo $user['birth']; ?>" name="birth" required>
                         </div>
                     </div>

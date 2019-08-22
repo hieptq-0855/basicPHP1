@@ -1,19 +1,22 @@
 <?php
 namespace Database;
+
 define('SERVER_NAME', 'localhost');
 define('USER_NAME', 'root');
 define('PASSWORD', '');
 define('DB_NAME', 'basic1');
 
+use http\Exception;
 use Model\Account;
 use PDO;
 use PDOException;
 use Model\User;
 
-include_once ('Model/User.php');
+include_once('Model/User.php');
 include_once('Model/Account.php');
 
-class Database {
+class Database
+{
     private $connection;
 
     public function __construct()
@@ -21,7 +24,7 @@ class Database {
         try {
             $this->connection = new PDO('mysql:host=localhost', USER_NAME, PASSWORD);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
         try {
@@ -37,7 +40,8 @@ class Database {
         $this->connection = null;
     }
 
-    public function checkUserName($user_name){
+    public function checkUserName($user_name)
+    {
         $sql = 'SELECT * FROM accounts where user_name = ?';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$user_name]);
@@ -48,7 +52,8 @@ class Database {
         }
     }
 
-    public function storeUser($full_name, $birth, $user_name, $password){
+    public function storeUser($full_name, $birth, $user_name, $password)
+    {
         $hash_password = md5($password);
         try {
             $this->connection->beginTransaction();
@@ -62,14 +67,15 @@ class Database {
             $this->connection->commit();
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->connection->rollBack();
 
             return false;
         }
     }
 
-    public function checkLogin($user_name, $password){
+    public function checkLogin($user_name, $password)
+    {
         $hash_password = md5($password);
         $sql = 'SELECT * FROM accounts WHERE user_name = ?';
         $stmt = $this->connection->prepare($sql);
@@ -86,7 +92,8 @@ class Database {
         }
     }
 
-    public function getInfo($account_id){
+    public function getInfo($account_id)
+    {
         $sql = 'SELECT * FROM users WHERE account_id = ?';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$account_id]);
@@ -98,7 +105,8 @@ class Database {
             return false;
         }
     }
-    public function getUserInformationList(){
+    public function getUserInformationList()
+    {
         try {
             $sql = 'SELECT users.*, accounts.user_name FROM users INNER JOIN accounts ON users.account_id = accounts.id WHERE accounts.role = 1';
             $stmt = $this->connection->prepare($sql);
@@ -111,7 +119,8 @@ class Database {
         }
     }
 
-    public function findUser($id){
+    public function findUser($id)
+    {
         try {
             $sql = 'SELECT * FROM users WHERE id = ?';
             $stmt = $this->connection->prepare($sql);
@@ -128,7 +137,8 @@ class Database {
         }
     }
 
-    public function doUpdateUser($id, $full_name, $address, $birth){
+    public function doUpdateUser($id, $full_name, $address, $birth)
+    {
         try {
             $sql = 'UPDATE users SET full_name = ?, address = ?, birth = ? WHERE id = ?';
             $stmt = $this->connection->prepare($sql);
@@ -140,31 +150,33 @@ class Database {
         }
     }
 
-    public function deleteUser($id){
-            $user = $this->findUser($id);
-            if ($user) {
-                try {
-                    $this->connection->beginTransaction();
-                    $sql = 'DELETE FROM accounts WHERE id = ?';
-                    $stmt = $this->connection->prepare($sql);
-                    $stmt->execute([$user['account_id']]);
-                    $sql = 'DELETE FROM users WHERE id = ?';
-                    $stmt = $this->connection->prepare($sql);
-                    $stmt->execute([$id]);
-                    $this->connection->commit();
+    public function deleteUser($id)
+    {
+        $user = $this->findUser($id);
+        if ($user) {
+            try {
+                $this->connection->beginTransaction();
+                $sql = 'DELETE FROM accounts WHERE id = ?';
+                $stmt = $this->connection->prepare($sql);
+                $stmt->execute([$user['account_id']]);
+                $sql = 'DELETE FROM users WHERE id = ?';
+                $stmt = $this->connection->prepare($sql);
+                $stmt->execute([$id]);
+                $this->connection->commit();
 
-                    return true;
-                } catch (PDOException $e) {
-                    $this->connection->rollBack();
+                return true;
+            } catch (PDOException $e) {
+                $this->connection->rollBack();
 
-                    return false;
-                }
+                return false;
             }
+        }
 
-            return false;
+        return false;
     }
 
-    public function findInfoUser($account_id){
+    public function findInfoUser($account_id)
+    {
         $sql = 'SELECT * FROM users WHERE account_id = ?';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$account_id]);
@@ -177,7 +189,8 @@ class Database {
         return false;
     }
 
-    public function changePassword($id, $new_password){
+    public function changePassword($id, $new_password)
+    {
         try {
             $new_password = md5($new_password);
             $sql = 'UPDATE accounts SET password = ? WHERE id = ?';
@@ -190,7 +203,8 @@ class Database {
         }
     }
 
-    public function createDB() {
+    public function createDB()
+    {
         try {
             $sql = 'CREATE DATABASE ' . DB_NAME;
             $this->connection->exec($sql);
