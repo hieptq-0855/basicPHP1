@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+session_start();
 use Database\Database;
 use http\Header;
 use Model\User;
@@ -9,23 +10,25 @@ include_once('Database/database.php');
 include_once ('Model/User.php');
 
 class Controller{
-    public function doSignUp($full_name, $birth, $user_name, $password, $confirm_password){
-        if ($password != $confirm_password) {
-            echo '<script>alert("Nhập lại mật khẩu không khớp!");window.location.href="./index.php?controller=ViewController&function=returnSignUp";</script>';
-        } else {
-            $db = new Database();
-            $bo = $db->checkUserName($user_name);
+    public function doSignUp($rq){
+        $db = new Database();
+        $bo = $db->checkUserName($rq['user_name']);
+        if ($bo) {
+            $bo = $db->storeUser($rq['full_name'], $rq['birth'], $rq['user_name'], $rq['password']);
+            $db->close();
             if ($bo) {
-                $bo = $db->storeUser($full_name, $birth, $user_name, $password);
-                $db->close();
-                if ($bo) {
-                    echo '<script>alert("Đăng ký thành công!");window.location.href="./index.php";</script>';
-                } else {
-                    echo '<script>alert("Xảy ra lỗi!");window.location.href="./index.php?controller=ViewController&function=returnSignUp";</script>';
-                }
+                echo '<script>alert("Đăng ký thành công!");window.location.href="./index.php";</script>';
             } else {
-                echo '<script>alert("Tên đăng nhập đã tồn tại!");window.location.href="./index.php?controller=ViewController&function=returnSignUp";</script>';
+                $errors = array('Xảy ra lỗi!');
+                $_SESSION['errors'] = $errors;
+
+                Header('Location: ./index.php?controller=ViewController&function=returnSignUp');
             }
+        } else {
+            $errors = array('Tên đăng nhập đã tồn tại!');
+            $_SESSION['errors'] = $errors;
+
+            Header('Location: ./index.php?controller=ViewController&function=returnSignUp');
         }
     }
 
