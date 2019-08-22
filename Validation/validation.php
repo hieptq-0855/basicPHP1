@@ -23,4 +23,17 @@ class Validation {
 
         return $errors;
     }
+
+    public function changePasswordFormValidation($rq){
+        $errors = array();
+        if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $rq['new_password'])) {
+            if ($rq['new_password'] !== $rq['confirm_password']) {
+                array_push($errors, 'Nhập lại mật khẩu không khớp');
+            }
+        } else {
+            array_push($errors, 'Mật khẩu phải ít nhất 8 ký tự gồm ít nhất 1 chữ hoa, 1 chữ thường và 1 chữ số');
+        }
+
+        return $errors;
+    }
 }

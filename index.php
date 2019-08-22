@@ -88,8 +88,16 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                     }
                     break;
                 case 'doAdminChangePassword':
-                    if (isset($_POST['submit'])) {
-                        $controller->doChangePassword($_POST['current_password'], $_POST['new_password'], $_POST['confirm_password']);
+                    if ($_REQUEST) {
+                        $rq = $_REQUEST;
+                        $errors = Validation::changePasswordFormValidation($rq);
+                        if (count($errors) > 0 ){
+                            $_SESSION['errors'] = $errors;
+
+                            Header('Location: index.php?controller=ViewController&function=returnAdminChangePassword');
+                        } else {
+                            $controller->doChangePassword($rq);
+                        }
                     } else {
                         header('Location: index.php');
                     }
