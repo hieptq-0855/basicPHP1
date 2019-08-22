@@ -6,7 +6,7 @@ use Validation\Validation;
 
 include_once('Controller/ViewController.php');
 include_once('Controller/Controller.php');
-include_once ('Validation/validation.php');
+include_once('Validation/validation.php');
 
 if (isset($_GET['controller']) && isset($_GET['function'])) {
     $controller = $_GET['controller'];
@@ -51,7 +51,7 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                 case 'doSignUp':
                     if ($_REQUEST) {
                         $rq = $_REQUEST;
-                        $errors = Validation::SingUpFormValidation($rq);
+                        $errors = Validation::singUpFormValidation($rq);
                         if (count($errors) > 0 ){
                             $_SESSION['errors'] = $errors;
                             Header('Location: index.php?controller=ViewController&function=returnSignUp');

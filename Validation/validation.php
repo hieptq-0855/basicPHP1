@@ -3,8 +3,10 @@ namespace Validation;
 
 session_start();
 
-class Validation {
-    public function SingUpFormValidation($rq){
+class Validation
+{
+    public function singUpFormValidation($rq)
+    {
         $errors = array();
         $now_date = date('Y-m-d');
         if ($rq['birth'] > $now_date) {
@@ -24,7 +26,8 @@ class Validation {
         return $errors;
     }
 
-    public function changePasswordFormValidation($rq){
+    public function changePasswordFormValidation($rq)
+    {
         $errors = array();
         if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $rq['new_password'])) {
             if ($rq['new_password'] !== $rq['confirm_password']) {

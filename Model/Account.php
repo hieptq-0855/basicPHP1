@@ -1,7 +1,8 @@
 <?php
 namespace Model;
 
-Class Account {
+class Account
+{
     public $id;
     public $user_name;
     public $password;

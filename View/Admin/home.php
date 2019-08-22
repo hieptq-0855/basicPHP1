@@ -1,7 +1,5 @@
 <?php
     require('../../Middleware/checkAdmin.php');
-    use Database\Database;
-    require('../../Database/database.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

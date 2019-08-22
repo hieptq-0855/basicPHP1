@@ -7,10 +7,12 @@ use http\Header;
 use Model\User;
 
 include_once('Database/database.php');
-include_once ('Model/User.php');
+include_once('Model/User.php');
 
-class Controller{
-    public function doSignUp($rq){
+class Controller
+{
+    public function doSignUp($rq)
+    {
         $db = new Database();
         $bo = $db->checkUserName($rq['user_name']);
         if ($bo) {
@@ -32,7 +34,8 @@ class Controller{
         }
     }
 
-    public function doLogin($user_name, $password){
+    public function doLogin($user_name, $password)
+    {
         $db = new Database();
         $result = $db->checkLogin($user_name, $password);
         $db->close();
@@ -49,15 +52,16 @@ class Controller{
         } else {
             echo '<script>alert("Tài khoản hoặc mật khẩu sai");window.location.href="./index.php";</script>';
         }
-
     }
 
-    public function doLogout(){
+    public function doLogout()
+    {
         session_unset();
         Header('Location: index.php');
     }
 
-    public function doUpdateUser($id, $full_name, $address, $birth){
+    public function doUpdateUser($id, $full_name, $address, $birth)
+    {
         $db = new Database();
         $result = $db->doUpdateUser($id, $full_name, $address, $birth);
         $db->close();
@@ -68,7 +72,8 @@ class Controller{
         }
     }
 
-    public function doDeleteUser($id){
+    public function doDeleteUser($id)
+    {
         $db = new Database();
         $result = $db->deleteUser($id);
         $db->close();
