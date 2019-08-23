@@ -4,6 +4,7 @@
         <h3 class="text-center">Thông tin cá nhân</h3>
         <?php
             use Database\Database;
+
             if (isset($_SESSION['user_id'])) {
                 $db = new Database();
                 $result = $db->getInfo($_SESSION['user_id']);
