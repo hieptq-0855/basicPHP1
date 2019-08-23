@@ -51,8 +51,10 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                 case 'doSignUp':
                     if ($_REQUEST) {
                         $rq = $_REQUEST;
+                        $rq['full_name'] = trim($rq['full_name']);
+                        $rq['user_name'] = trim($rq['user_name']);
                         $errors = Validation::singUpFormValidation($rq);
-                        if (count($errors) > 0 ){
+                        if (count($errors) > 0) {
                             $_SESSION['errors'] = $errors;
                             Header('Location: index.php?controller=ViewController&function=returnSignUp');
                         } else {
@@ -64,8 +66,16 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
 
                     break;
                 case 'doLogin':
-                    if (isset($_POST['login'])) {
-                        $controller->doLogin($_POST['user_name'], $_POST['password']);
+                    if (isset($_REQUEST)) {
+                        $rq = $_REQUEST;
+                        $rq['user_name'] = trim($rq['user_name']);
+                        $errors = Validation::loginFormValidation($rq);
+                        if (count($errors) > 0) {
+                            $_SESSION['errors'] = $errors;
+                            Header('Location: index.php');
+                        } else {
+                            $controller->doLogin($rq);
+                        }
                     } else {
                         header('Location: index.php');
                     }
@@ -91,7 +101,7 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                     if ($_REQUEST) {
                         $rq = $_REQUEST;
                         $errors = Validation::changePasswordFormValidation($rq);
-                        if (count($errors) > 0 ){
+                        if (count($errors) > 0) {
                             $_SESSION['errors'] = $errors;
 
                             Header('Location: index.php?controller=ViewController&function=returnAdminChangePassword');

@@ -34,10 +34,10 @@ class Controller
         }
     }
 
-    public function doLogin($user_name, $password)
+    public function doLogin($rq)
     {
         $db = new Database();
-        $result = $db->checkLogin($user_name, $password);
+        $result = $db->checkLogin($rq['user_name'], $rq['password']);
         $db->close();
         if ($result) {
             session_start();
@@ -50,7 +50,11 @@ class Controller
                 Header('Location: index.php?controller=ViewController&function=returnClientHome');
             }
         } else {
-            echo '<script>alert("Tài khoản hoặc mật khẩu sai");window.location.href="./index.php";</script>';
+            $errors = array();
+            array_push($errors, "Tài khoản hoặc mật khẩu sai");
+            $_SESSION['errors'] = $errors;
+
+            Header('Location: ./index.php');
         }
     }
 

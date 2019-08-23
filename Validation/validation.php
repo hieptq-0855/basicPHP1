@@ -7,8 +7,6 @@ class Validation
 {
     public function singUpFormValidation($rq)
     {
-        $rq['full_name'] = trim($rq['full_name']);
-        $rq['user_name'] = trim($rq['user_name']);
         $errors = array();
         $pattern = '/^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐ
         ỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]{1,50}$/';
@@ -40,12 +38,22 @@ class Validation
     public function changePasswordFormValidation($rq)
     {
         $errors = array();
-        if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $rq['new_password'])) {
+        if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$/', $rq['new_password'])) {
             if ($rq['new_password'] !== $rq['confirm_password']) {
                 array_push($errors, 'Nhập lại mật khẩu không khớp');
             }
         } else {
             array_push($errors, 'Mật khẩu phải ít nhất 8 ký tự gồm ít nhất 1 chữ hoa, 1 chữ thường và 1 chữ số');
+        }
+
+        return $errors;
+    }
+
+    public function loginFormValidation($rq)
+    {
+        $errors = array();
+        if (!preg_match('/^(?=.*[a-zA-Z])[A-Za-z\d]{1,50}$/', $rq['user_name'])) {
+            array_push($errors, "Tên đăng nhập sai!");
         }
 
         return $errors;

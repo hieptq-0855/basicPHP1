@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>Đăng nhập</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="../Public/CSS/style.css">
 </head>
 <body>
     <br>
@@ -15,6 +15,25 @@
         <h2>Đăng nhập</h2>
     </div>
     <br>
+    <?php
+    if (isset($_SESSION['errors'])) {
+        ?>
+        <div class="row d-flex justify-content-center">
+            <div class="error-alert">
+                <?php
+                foreach ($_SESSION['errors'] as $error) {
+                    ?>
+                    <p><?php echo $error; ?></p>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+        <br>
+        <?php
+    }
+    unset($_SESSION['errors']);
+    ?>
     <div class="row d-flex justify-content-center">
         <div class="col-md-5">
             <form method="POST" action="../index.php?controller=Controller&function=doLogin">
