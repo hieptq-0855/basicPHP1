@@ -17,11 +17,30 @@ require('../../Database/database.php');
         <h1 class="text-center">Cập nhật thông tin cá nhân</h1>
         <br>
         <?php
+        if (isset($_SESSION['errors'])) {
+            ?>
+            <div class="flex-justify-center">
+                <div class="error-alert width-60">
+                    <?php
+                    foreach ($_SESSION['errors'] as $error) {
+                        ?>
+                        <p><?php echo $error; ?></p>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+            <br>
+            <?php
+        }
+        unset($_SESSION['errors']);
+        ?>
+        <?php
             $db = new Database();
             $user = $db->findInfoUser($_SESSION['user_id']);
             if ($user) {
         ?>
-                <form action="../../index.php?controller=Controller&function=doUpdateProfile" method="post"
+                <form action="../../index.php?controller=Controller&function=doUserUpdateProfile" method="post"
                       class="user-update-form">
                     <div class="flex-justify-center">
                         <div class="user-information-style user-update-style">

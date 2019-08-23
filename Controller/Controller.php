@@ -64,10 +64,10 @@ class Controller
         Header('Location: index.php');
     }
 
-    public function doUpdateProfile($id, $full_name, $address, $birth)
+    public function doUpdateProfile($rq)
     {
         $db = new Database();
-        $result = $db->doUpdateUser($id, $full_name, $address, $birth);
+        $result = $db->doUpdateUser($rq['id'], $rq['full_name'], $rq['address'], $rq['birth']);
         $db->close();
         if ($result) {
             echo '<script>alert("Cập nhật thành công");window.location.href="./index.php";</script>';
