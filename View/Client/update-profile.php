@@ -21,7 +21,7 @@ require('../../Database/database.php');
             $user = $db->findInfoUser($_SESSION['user_id']);
             if ($user) {
         ?>
-                <form action="../../index.php?controller=Controller&function=doUpdateUser" method="post"
+                <form action="../../index.php?controller=Controller&function=doUpdateProfile" method="post"
                       class="user-update-form">
                     <div class="flex-justify-center">
                         <div class="user-information-style user-update-style">

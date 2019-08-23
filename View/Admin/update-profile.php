@@ -27,7 +27,7 @@
                         $user = $db->findInfoUser($_SESSION['user_id']);
                         if ($user) {
                     ?>
-                            <form action="../../index.php?controller=Controller&function=doUpdateUser" method="POST">
+                            <form action="../../index.php?controller=Controller&function=doUpdateProfile" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $user['id'] ?>">
                                 <label>Họ và tên</label>
                                 <input type="text" value="<?php echo $user['full_name']; ?>" name="full_name"
