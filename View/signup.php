@@ -7,6 +7,7 @@ require_once('../Middleware/loginMiddleware.php');
     <meta charset="UTF-8">
     <title>Đăng ký</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../Public/CSS/style.css">
 
 </head>
 <body>
@@ -39,23 +40,26 @@ require_once('../Middleware/loginMiddleware.php');
         <form method="POST" action="../index.php?controller=Controller&function=doSignUp">
             <div class="form-group">
                 <label>Họ tên</label>
-                <input type="text" class="form-control" name="full_name" placeholder="Nhập họ tên" maxlength="50">
+                <input type="text" class="form-control" name="full_name" placeholder="Nhập họ tên" maxlength="50" required>
             </div>
             <div class="form-group">
                 <label>Ngày sinh</label>
-                <input type="date" class="form-control" name="birth">
+                <input type="date" class="form-control" name="birth" required>
             </div>
             <div class="form-group">
                 <label>Tên đăng nhập</label>
-                <input type="text" class="form-control" name="user_name" placeholder="Nhập tên đăng nhập" maxlength="50">
+                <input type="text" class="form-control" name="user_name" placeholder="Nhập tên đăng nhập"
+                       maxlength="50" required>
             </div>
             <div class="form-group">
                 <label>Mật khẩu</label>
-                <input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu" maxlength="50" required>
+                <input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu"
+                       maxlength="50" required>
             </div>
             <div class="form-group">
                 <label>Nhập lại mật khẩu</label>
-                <input type="password" class="form-control" name="confirm_password" placeholder="Nhập lại mật khẩu" maxlength="50" required>
+                <input type="password" class="form-control" name="confirm_password" placeholder="Nhập lại mật khẩu"
+                       maxlength="50" required>
             </div>
             <div class="row justify-content-center">
                 <button type="submit" name="signup" class="btn btn-primary">Đăng ký</button>
