@@ -106,14 +106,14 @@ class Controller
                     Header('Location: index.php?controller=ViewController&function=returnAdminChangePassword');
                 }
             } else {
-                array_push($errors, "Mật khẩu hiện tại sai!");
+                array_push($errors, 'Mật khẩu hiện tại sai!');
                 $db->close();
                 $_SESSION['errors'] = $errors;
 
                 Header('Location: index.php?controller=ViewController&function=returnAdminChangePassword');
             }
         } else {
-            array_push($errors, "Lỗi!");
+            array_push($errors, 'Lỗi!');
             $db->close();
             $_SESSION['errors'] = $errors;
 

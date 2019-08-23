@@ -38,6 +38,9 @@ class Validation
     public function changePasswordFormValidation($rq)
     {
         $errors = array();
+        if (!preg_match('/^.{1,50}$/', $rq['current_password'])) {
+            array_push($errors, 'Mật khẩu hiện tại sai');
+        }
         if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$/', $rq['new_password'])) {
             if ($rq['new_password'] !== $rq['confirm_password']) {
                 array_push($errors, 'Nhập lại mật khẩu không khớp');
