@@ -24,6 +24,25 @@
             <br>
             <h1 class="text-center">Cập nhật người dùng</h1>
             <br>
+            <?php
+            if (isset($_SESSION['errors'])) {
+                ?>
+                <div class="flex-justify-center">
+                    <div class="error-alert width-60">
+                        <?php
+                        foreach ($_SESSION['errors'] as $error) {
+                            ?>
+                            <p><?php echo $error; ?></p>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+                <br>
+                <?php
+            }
+            unset($_SESSION['errors']);
+            ?>
             <div class="flex-justify-center">
                 <div class="update-form-container">
                     <?php

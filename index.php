@@ -49,7 +49,7 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
             $controller = new Controller();
             switch ($function) {
                 case 'doSignUp':
-                    if ($_REQUEST) {
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $rq = $_REQUEST;
                         $rq['full_name'] = trim($rq['full_name']);
                         $rq['user_name'] = trim($rq['user_name']);
@@ -66,7 +66,7 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
 
                     break;
                 case 'doLogin':
-                    if (isset($_REQUEST)) {
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $rq = $_REQUEST;
                         $rq['user_name'] = trim($rq['user_name']);
                         $errors = Validation::loginFormValidation($rq);
@@ -83,9 +83,26 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                 case 'doLogout':
                         $controller->doLogout();
                     break;
-                case 'doUpdateUser':
+                case 'doUpdateProfile':
                     if (isset($_POST['submit'])) {
-                        $controller->doUpdateUser($_POST['id'], $_POST['full_name'], $_POST['address'], $_POST['birth']);
+                        $controller->doUpdateProfile($_POST['id'], $_POST['full_name'], $_POST['address'], $_POST['birth']);
+                    } else {
+                        header('Location: index.php');
+                    }
+                    break;
+                case 'doUpdateUser':
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        $rq = $_REQUEST;
+                        $rq['full_name'] = trim($rq['full_name']);
+                        $rq['address'] = trim($rq['address']);
+                        $errors = Validation::updateUserForm($rq);
+                        if (count($errors) > 0) {
+                            $_SESSION['errors'] = $errors;
+
+                            ViewController::returnUpdateUser($rq['id']);
+                        } else {
+                            $controller->doUpdateUser($rq);
+                        }
                     } else {
                         header('Location: index.php');
                     }
@@ -98,7 +115,7 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                     }
                     break;
                 case 'doAdminChangePassword':
-                    if ($_REQUEST) {
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $rq = $_REQUEST;
                         $errors = Validation::changePasswordFormValidation($rq);
                         if (count($errors) > 0) {

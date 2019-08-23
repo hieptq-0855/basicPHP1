@@ -64,7 +64,7 @@ class Controller
         Header('Location: index.php');
     }
 
-    public function doUpdateUser($id, $full_name, $address, $birth)
+    public function doUpdateProfile($id, $full_name, $address, $birth)
     {
         $db = new Database();
         $result = $db->doUpdateUser($id, $full_name, $address, $birth);
@@ -73,6 +73,22 @@ class Controller
             echo '<script>alert("Cập nhật thành công");window.location.href="./index.php";</script>';
         } else {
             echo '<script>alert("Cập nhật lỗi!");window.location.href="./index.php";</script>';
+        }
+    }
+
+    public function doUpdateUser($rq)
+    {
+        $db = new Database();
+        $result = $db->doUpdateUser($rq['id'], $rq['full_name'], $rq['address'], $rq['birth']);
+        $db->close();
+        if ($result) {
+            echo '<script>alert("Cập nhật thành công");window.location.href="./index.php?controller=ViewController&function=returnUserManagement";</script>';
+        } else {
+            $errors = array();
+            array_push($errors, 'Cập nhật lỗi');
+            $_SESSION['errors'] = $errors;
+
+            Header('Location: index.php?controller=ViewController&function=returnUpdateUser&id=' . $rq['id']);
         }
     }
 
