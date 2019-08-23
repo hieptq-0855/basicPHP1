@@ -20,6 +20,25 @@
             <br>
             <h1 class="text-center">Cập nhật thông tin cá nhân</h1>
             <br>
+            <?php
+            if (isset($_SESSION['errors'])) {
+                ?>
+                <div class="flex-justify-center">
+                    <div class="error-alert width-60">
+                        <?php
+                        foreach ($_SESSION['errors'] as $error) {
+                            ?>
+                            <p><?php echo $error; ?></p>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+                <br>
+                <?php
+            }
+            unset($_SESSION['errors']);
+            ?>
             <div class="flex-justify-center">
                 <div class="update-form-container">
                     <?php
@@ -27,7 +46,7 @@
                         $user = $db->findInfoUser($_SESSION['user_id']);
                         if ($user) {
                     ?>
-                            <form action="../../index.php?controller=Controller&function=doUpdateProfile" method="POST">
+                            <form action="../../index.php?controller=Controller&function=doAdminUpdateProfile" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $user['id'] ?>">
                                 <label>Họ và tên</label>
                                 <input type="text" value="<?php echo $user['full_name']; ?>" name="full_name"

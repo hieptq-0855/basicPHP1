@@ -83,9 +83,36 @@ if (isset($_GET['controller']) && isset($_GET['function'])) {
                 case 'doLogout':
                         $controller->doLogout();
                     break;
-                case 'doUpdateProfile':
-                    if (isset($_POST['submit'])) {
-                        $controller->doUpdateProfile($_POST['id'], $_POST['full_name'], $_POST['address'], $_POST['birth']);
+                case 'doAdminUpdateProfile':
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        $rq = $_REQUEST;
+                        $rq['full_name'] = trim($rq['full_name']);
+                        $rq['address'] = trim($rq['address']);
+                        $errors = Validation::updateUserForm($rq);
+                        if (count($errors) > 0) {
+                            $_SESSION['errors'] = $errors;
+
+                            ViewController::returnAdminUpdateProfile();
+                        } else {
+                            $controller->doUpdateProfile($rq);
+                        }
+                    } else {
+                        header('Location: index.php');
+                    }
+                    break;
+                case 'doUserUpdateProfile':
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        $rq = $_REQUEST;
+                        $rq['full_name'] = trim($rq['full_name']);
+                        $rq['address'] = trim($rq['address']);
+                        $errors = Validation::updateUserForm($rq);
+                        if (count($errors) > 0) {
+                            $_SESSION['errors'] = $errors;
+
+                            ViewController::returnUserUpdateProfile();
+                        } else {
+                            $controller->doUpdateProfile($rq);
+                        }
                     } else {
                         header('Location: index.php');
                     }
