@@ -22,7 +22,7 @@ require_once('../Middleware/loginMiddleware.php');
         <div class="row d-flex justify-content-center">
             <div class="error-alert">
                 <?php
-                    foreach($_SESSION['errors'] as $error) {
+                    foreach ($_SESSION['errors'] as $error) {
                 ?>
                         <p><?php echo $error; ?></p>
                 <?php
@@ -40,7 +40,8 @@ require_once('../Middleware/loginMiddleware.php');
         <form method="POST" action="../index.php?controller=Controller&function=doSignUp">
             <div class="form-group">
                 <label>Họ tên</label>
-                <input type="text" class="form-control" name="full_name" placeholder="Nhập họ tên" maxlength="50" required>
+                <input type="text" class="form-control" name="full_name" placeholder="Nhập họ tên" maxlength="50"
+                       required>
             </div>
             <div class="form-group">
                 <label>Ngày sinh</label>
